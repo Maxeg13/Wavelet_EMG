@@ -284,6 +284,7 @@ void MainWindow::paintEvent(QPaintEvent* e)
     if(add_cnt==3)
     {
         refreshPerc();
+//        qDebug()<<SO->WT.out[10];
         qDebug()<<perc->getMaxInd();
 
         add_cnt=0;
@@ -447,7 +448,7 @@ void MainWindow::addLearnVector(int gest)
 {
     vector<float> x;
     for(int i=0;i<channels_N;i++)
-        x.push_back(SO->WT.out[channels[i]]/4.);
+        x.push_back(SO->WT.out[channels[i]]/100.);
 
     data_lrn[gest].push_back(x);
 }
@@ -456,7 +457,7 @@ void MainWindow::refreshPerc()
 {
     vector<float> x;
     for(int i=1;i<(channels_N);i++)
-        x.push_back(SO->WT.out[channels[i]]/4.);
+        x.push_back(SO->WT.out[channels[i]]/100.);
 
     perc->refresh(x);
 }
