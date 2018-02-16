@@ -90,6 +90,12 @@ int threshB( int x, int a)
         return(1);
 }
 
+float downerVal(float x)
+{
+    if(x<0)return x;
+    return 0;
+}
+
 float upperVal(float x)
 {
     if(x>0)return x;
@@ -477,22 +483,27 @@ void getFeatures_gearbox2(int8_t x, vector<float>& y)
 Wavelet::Wavelet()
 {
     max_i=0;
-    FR=new veryLowPassFr[wn]();
+    FR=new veryLowPassFr[2*wn]();
     im=0;
     for(int i=0;i<wn;i++)
         for(int j=0;j<mas_n;j++)
             mas[i][j]=0;
 
-    for( j=0;j<wn;j++)
+    for( j=0;j<2*wn;j++)
     {
         out[j]=0;
+    }
+
+    for( j=0;j<wn;j++)
+    {
+
         float mean=0;
         for( i=0;i<ww;i++)
         {
 
             y[j]=0;
             x[j][i]=0;
-            a[j][i]=scaleMoth(i,1+j/4.5);//2 is width//ten times at least//.2+j/4.
+            a[j][i]=scaleMoth(i,.2+j/4.5);//2 is width//ten times at least//.2+j/4.
             mean+=a[j][i];
         }
         mean/=ww;
@@ -554,7 +565,9 @@ float Wavelet::extract(float& x1)
         {
             y[i]+=a[i][j]*x[i][j];
         }
-        out[i]=20*FR[i](killRangeF(y[i],7));
+        out[i]=3*FR[i](upperVal(y[i]-7));
+        out[wn+i]=3*FR[wn+i](downerVal(y[i]+7));
+
         stdy[i]=(y[i]);
 
     }

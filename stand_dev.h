@@ -13,6 +13,8 @@ using namespace Eigen;
 float thresh_f(float, float, float);
 int killRange(int x, int thr );
 float killRangeF(float x, float thr );
+float upperVal(float x);
+float downerVal(float x);
 
 void getAmp(vector<fcomplex>, vector<float>&);
 float getT(vector<float>);
@@ -89,7 +91,7 @@ public:
     float x[wn][ww];
     float y[wn];
     float stdy[wn];
-    float out[wn];
+    float out[2*wn];
     Wavelet();
     float extract(float&);
     float scaleMoth(float ,float);

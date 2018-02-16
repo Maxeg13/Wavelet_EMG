@@ -26,7 +26,7 @@ QLineEdit* LE;
 QPushButton* sendB;
 QPushButton *btn_learn;
 int gestures_N=3;
-int channels_N=20;
+int channels_N=15;
 int* channels;
 QTimer *timer;
 QwtPlot *vibro_plot, *ftt_plot;
@@ -146,7 +146,7 @@ MainWindow::MainWindow(QWidget *parent) :
     channels=new int[channels_N];
     for(int i=0;i<channels_N;i++)
     {
-        channels[i]=(int)((wn/channels_N)*i);
+        channels[i]=(int)((wn*2/channels_N)*i);
         //        qDebug()<<channels[i];
     }
 
@@ -232,11 +232,12 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
     }
     if(e->text()=="r")
     {
-        data_lrn.resize(0);
-        data_lrn.resize(gestures_N+1);
-        vector<float> h;
-        h.resize(channels_N);
-        data_lrn[0].push_back(h);
+//        qDebug()<<data_lrn[0][0][7];
+//        data_lrn.resize(0);
+//        data_lrn.resize(gestures_N+1);
+//        vector<float> h;
+//        h.resize(channels_N);
+//        data_lrn[0].push_back(h);
         perc->reset_w();
     }
     if(e->text()=="l")
@@ -247,7 +248,7 @@ void MainWindow::keyPressEvent(QKeyEvent* e)
 
         int i;
         int j;
-        for(i=0;i<10000;i++)
+        for(i=0;i<100000;i++)
             for(j=0;j<(gestures_N+1);j++)
                 if(data_lrn[j].size())
         perc->learn1(data_lrn[j][rand()%data_lrn[j].size()],perc_targ[j]);
@@ -317,7 +318,8 @@ void MainWindow::paintEvent(QPaintEvent* e)
                     painter->setPen(pen);
                     painter->drawPoint(QPointF(j,i));
                 }
-            for(int i=0;i<(wn-1);i++)
+//            painter->scale(4,1.2);
+            for(int i=0;i<(2*wn-1);i++)
             {
                 drawFunc(SO->WT.out[i]*80,QC,1);
 
@@ -447,7 +449,7 @@ void MainWindow::addLearnVector(int gest)
 {
     vector<float> x;
     for(int i=0;i<channels_N;i++)
-        x.push_back(SO->WT.out[channels[i]]/2.);
+        x.push_back(SO->WT.out[channels[i]]/4.);
 
     data_lrn[gest].push_back(x);
 }
@@ -456,7 +458,7 @@ void MainWindow::refreshPerc()
 {
     vector<float> x;
     for(int i=1;i<(channels_N);i++)
-        x.push_back(SO->WT.out[channels[i]]/2.);
+        x.push_back(SO->WT.out[channels[i]]/4.);
 
     perc->refresh(x);
 }
