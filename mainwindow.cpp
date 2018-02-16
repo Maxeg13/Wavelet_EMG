@@ -26,7 +26,7 @@ QLineEdit* LE;
 QPushButton* sendB;
 QPushButton *btn_learn;
 int gestures_N=3;
-int channels_N=20;
+int channels_N=15;
 int* channels;
 QTimer *timer;
 QwtPlot *vibro_plot, *ftt_plot;
@@ -447,7 +447,7 @@ void MainWindow::addLearnVector(int gest)
 {
     vector<float> x;
     for(int i=0;i<channels_N;i++)
-        x.push_back(SO->WT.out[channels[i]]/2.);
+        x.push_back(SO->WT.out[channels[i]]/4.);
 
     data_lrn[gest].push_back(x);
 }
@@ -456,7 +456,7 @@ void MainWindow::refreshPerc()
 {
     vector<float> x;
     for(int i=1;i<(channels_N);i++)
-        x.push_back(SO->WT.out[channels[i]]/2.);
+        x.push_back(SO->WT.out[channels[i]]/4.);
 
     perc->refresh(x);
 }
