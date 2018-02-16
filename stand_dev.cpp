@@ -492,7 +492,7 @@ Wavelet::Wavelet()
 
             y[j]=0;
             x[j][i]=0;
-            a[j][i]=scaleMoth(i,.8+j/20.);//2 is width//ten times at least//.2+j/4.5
+            a[j][i]=scaleMoth(i,.2+j/4.5);//2 is width//ten times at least//.2+j/4.5 5/17. one and
             mean+=a[j][i];
         }
         mean/=ww;
@@ -516,15 +516,15 @@ Wavelet::Wavelet()
 
 float badMorlet(float x,float a)
 {
-    float x1=((x-wn/2.)/4.);//(x/20-1)
+    float x1=((x-wn/2.)/2.);//(x/20-1)
 
-    return((1./sqrt(3.))*exp(-x1*x1/0.66/0.66)*cos((x1)/a/0.66));
+    return((1./sqrt(3.))*exp(-x1*x1)*sin((x1+12/17.+a)/1.3));
 }
 
 float Morlet(float x,float a)
 {
     float x1=((x-ww/2.)/a);
-    return((1./sqrt(1.))*exp(-x1*x1)*sin((x1)/1.3));
+    return((1./sqrt(1.))*exp(-x1*x1)*sin((x1+12/17.)/1.3));//+12/17.
 }
 
 float HAAR(float x, float a)
@@ -540,7 +540,7 @@ float Wavelet::scaleMoth(float x, float a)
     return(Morlet(x,a));
     //    return();
 }
-
+//now i just figured out the phase
 float Wavelet::extract(float& x1)
 {
     for( i=0;i<wn;i++)
@@ -554,7 +554,7 @@ float Wavelet::extract(float& x1)
         {
             y[i]+=a[i][j]*x[i][j];
         }
-        out[i]=40*FR[i](killRangeF(y[i],7));
+        out[i]=10*FR[i](killRangeF(y[i],5));
         stdy[i]=(y[i]);
 
     }

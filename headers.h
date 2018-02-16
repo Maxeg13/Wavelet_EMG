@@ -23,7 +23,7 @@
 #include <complex>
 #include <stdio.h>
 
-#define ww 40
+#define ww 50
 #define wn 60
 #define mas_n 200
 #define NFT 700

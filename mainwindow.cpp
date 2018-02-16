@@ -285,7 +285,7 @@ void MainWindow::paintEvent(QPaintEvent* e)
     {
         refreshPerc();
 //        qDebug()<<SO->WT.out[10];
-        qDebug()<<perc->getMaxInd();
+//        qDebug()<<perc->getMaxInd();
 
         add_cnt=0;
         for(int i=0;i<gestures_N;i++)
@@ -306,7 +306,7 @@ void MainWindow::paintEvent(QPaintEvent* e)
             QColor QC=QColor(0,0,0);
             float h=0;
             painter->setPen(pen);
-            painter->scale(4,2);
+            painter->scale(3.5,2);
             //    painter->drawEllipse(QPoint(0,0),40,40);
 
             for(int j=0;j<mas_n;j++)
@@ -316,7 +316,7 @@ void MainWindow::paintEvent(QPaintEvent* e)
 
                     pen.setColor(QC);
                     painter->setPen(pen);
-                    painter->drawPoint(QPointF(j,i));
+                    painter->drawPoint(QPointF((j),i));
                 }
             for(int i=0;i<(wn-1);i++)
             {
