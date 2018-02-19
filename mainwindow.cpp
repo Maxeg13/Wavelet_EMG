@@ -25,6 +25,8 @@ QSlider *ySlider;
 QLineEdit* LE;
 QPushButton* sendB;
 QPushButton *btn_learn;
+int im;
+float copy_mas[wn][mas_n];
 int gestures_N=3;
 int channels_N=15;
 int* channels;
@@ -298,6 +300,7 @@ void MainWindow::paintEvent(QPaintEvent* e)
 
     if(SO_on)
     {
+        int i,j;
         if(draw_on)
         {
             QPainter* painter=new QPainter(this);
@@ -308,17 +311,23 @@ void MainWindow::paintEvent(QPaintEvent* e)
             painter->setPen(pen);
             painter->scale(3.5,2);
             //    painter->drawEllipse(QPoint(0,0),40,40);
+            im=SO->WT.im;
+            for( j=0;j<mas_n;j++)
+                for( i=0;i<wn;i++)
+                copy_mas[i][j]=SO->WT.mas[i][j];
 
-            for(int j=0;j<mas_n;j++)
-                for(int i=0;i<wn;i++)
+
+
+            for(j=0;j<mas_n;j++)
+                for( i=0;i<wn;i++)
                 {
-                    drawFunc(SO->WT.mas[i][j]*80,QC,1);
-
+//                    drawFunc(copy_mas[i][(j-im+mas_n)%mas_n]*80,QC,1);
+drawFunc(copy_mas[i][(j)]*80,QC,1);
                     pen.setColor(QC);
                     painter->setPen(pen);
                     painter->drawPoint(QPointF((j),i));
                 }
-            for(int i=0;i<(wn-1);i++)
+            for( i=0;i<(wn-1);i++)
             {
                 drawFunc(SO->WT.out[i]*80,QC,1);
 
